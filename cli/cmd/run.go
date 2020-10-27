@@ -45,7 +45,7 @@ var rootCmd = &cobra.Command{
 		log.Println("get records...done")
 
 		log.Println("save records...")
-		err = nmc_typhoon_db_client.WriteToCSV(records, "test.csv")
+		err = nmc_typhoon_db_client.WriteToCSV(records, outputFile)
 		if err != nil {
 			log.Fatal(err)
 		}
