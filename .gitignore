@@ -17,3 +17,5 @@
 dist/
 playground/
 .playground
+
+bin
