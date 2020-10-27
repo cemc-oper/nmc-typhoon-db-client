@@ -3,15 +3,34 @@ package nmc_typhoon_db_client
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"strings"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
+type QueryConditions struct {
+	StartTime    string
+	EndTime      string
+	ForecastHour string
+}
+
 func GetRecords(
+	conditions QueryConditions,
 	config DatabaseConfig,
 ) ([]Record, error) {
+	startTime, err := time.Parse("2006010215", conditions.StartTime)
+	if err != nil {
+		return nil, fmt.Errorf("parse start time has error: %v", err)
+	}
+	// endTime := nil
+	forecastHour, err := strconv.Atoi(conditions.ForecastHour)
+	if err != nil {
+		return nil, fmt.Errorf("parse forecsat hour has error: %v", err)
+	}
+
 	var db *sqlx.DB
 
 	conn := fmt.Sprintf(
@@ -21,7 +40,7 @@ func GetRecords(
 		config.Host,
 		config.DatabaseName)
 
-	db, err := sqlx.Open("mysql", conn)
+	db, err = sqlx.Open("mysql", conn)
 
 	if err != nil {
 		log.Fatal("open db connection has error:", err)
@@ -34,11 +53,14 @@ func GetRecords(
 
 	tableName := config.TableName
 
-	querySQL := "SELECT " + queryColumnsString + " " +
-		"FROM " + tableName + " " +
-		"WHERE datetime='2020-10-25' AND fcsthour=0"
+	querySQL := fmt.Sprintf("SELECT %s FROM %s WHERE datetime='%s' AND fcsthour=%d",
+		queryColumnsString,
+		tableName,
+		startTime.Format("2006-01-02 15:04:05"),
+		forecastHour,
+	)
 
-	// log.Println(querySQL)
+	log.Println(querySQL)
 
 	rows, err := db.Queryx(querySQL)
 

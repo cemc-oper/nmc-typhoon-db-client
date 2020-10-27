@@ -12,8 +12,11 @@ import (
 )
 
 var (
-	configFile string
-	outputFile string
+	configFile   string
+	outputFile   string
+	startTime    string
+	endTime      string
+	forecastHour string
 )
 
 var rootCmd = &cobra.Command{
@@ -34,7 +37,14 @@ var rootCmd = &cobra.Command{
 		}
 
 		log.Println("get records...")
-		records, err := nmc_typhoon_db_client.GetRecords(config.Database)
+
+		conditions := nmc_typhoon_db_client.QueryConditions{
+			StartTime:    startTime,
+			EndTime:      endTime,
+			ForecastHour: forecastHour,
+		}
+
+		records, err := nmc_typhoon_db_client.GetRecords(conditions, config.Database)
 		if err != nil {
 			log.Fatal("get records has error:", err)
 		}
@@ -57,6 +67,11 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVar(&configFile, "config", "", "config file path")
+	rootCmd.PersistentFlags().StringVar(&configFile, "config", "./config.yaml", "config file path")
 	rootCmd.PersistentFlags().StringVar(&outputFile, "output-file", "", "output file path")
+	rootCmd.PersistentFlags().StringVar(&startTime, "start-time", "", "start time, YYYYMMDDHH")
+	rootCmd.PersistentFlags().StringVar(&endTime, "end-time", "", "end time, YYYYMMDDHH")
+	rootCmd.PersistentFlags().StringVar(&forecastHour, "forecast-hour", "0", "forecast hour, 0 or 0-120")
+	rootCmd.MarkPersistentFlagRequired("start-time")
+	rootCmd.MarkPersistentFlagRequired("output-file")
 }
