@@ -16,10 +16,6 @@ var (
 	outputFile string
 )
 
-type Config struct {
-	Database nmc_typhoon_db_client.DatabaseConfig
-}
-
 var rootCmd = &cobra.Command{
 	Use:   "nmc-typhoon-db-client",
 	Short: "Get typhoon report from NMC Typhoon Database",
@@ -30,7 +26,7 @@ var rootCmd = &cobra.Command{
 			panic(err)
 		}
 
-		config := Config{}
+		config := nmc_typhoon_db_client.Config{}
 
 		err = yaml.Unmarshal(data, &config)
 		if err != nil {

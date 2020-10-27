@@ -9,18 +9,9 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type DatabaseConfig struct {
-	Host         string
-	DatabaseName string `yaml:"database_name"`
-	TableName    string `yaml:"table_name"`
-
-	Auth struct {
-		User     string
-		Password string
-	}
-}
-
-func GetRecords(config DatabaseConfig) ([]Record, error) {
+func GetRecords(
+	config DatabaseConfig,
+) ([]Record, error) {
 	var db *sqlx.DB
 
 	conn := fmt.Sprintf(
