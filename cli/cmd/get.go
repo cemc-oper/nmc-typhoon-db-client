@@ -1,10 +1,8 @@
 package cmd
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 
 	nmc_typhoon_db_client "github.com/nwpc-oper/nmc-typhoon-db-client"
 	"github.com/spf13/cobra"
@@ -19,10 +17,13 @@ var (
 	forecastHour string
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "nmc-typhoon-db-client",
-	Short: "Get typhoon report from NMC Typhoon Database",
-	Long:  `Get typhoon report from NMC Typhoon Database`,
+const getLongDecription = `Get typhoon reports from NMC Typhoon Database and save to CSV files.
+`
+
+var getCmd = &cobra.Command{
+	Use:   "get",
+	Short: "Get typhoon reports from NMC Typhoon Database",
+	Long:  getLongDecription,
 	Run: func(cmd *cobra.Command, args []string) {
 		data, err := ioutil.ReadFile(configFile)
 		if err != nil {
@@ -59,19 +60,14 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
-
 func init() {
-	rootCmd.PersistentFlags().StringVar(&configFile, "config", "./config.yaml", "config file path")
-	rootCmd.PersistentFlags().StringVar(&outputFile, "output-file", "", "output file path")
-	rootCmd.PersistentFlags().StringVar(&startTime, "start-time", "", "start time, YYYYMMDDHH")
-	rootCmd.PersistentFlags().StringVar(&endTime, "end-time", "", "end time, YYYYMMDDHH")
-	rootCmd.PersistentFlags().StringVar(&forecastHour, "forecast-hour", "0", "forecast hour, 0 or 0-120")
-	rootCmd.MarkPersistentFlagRequired("start-time")
-	rootCmd.MarkPersistentFlagRequired("output-file")
+	getCmd.PersistentFlags().StringVar(&configFile, "config", "./config.yaml", "config file path")
+	getCmd.PersistentFlags().StringVar(&outputFile, "output-file", "", "output file path")
+	getCmd.PersistentFlags().StringVar(&startTime, "start-time", "", "start time, YYYYMMDDHH")
+	getCmd.PersistentFlags().StringVar(&endTime, "end-time", "", "end time, YYYYMMDDHH")
+	getCmd.PersistentFlags().StringVar(&forecastHour, "forecast-hour", "0", "forecast hour(s), 0 or 0-120")
+	getCmd.MarkPersistentFlagRequired("start-time")
+	getCmd.MarkPersistentFlagRequired("output-file")
+
+	rootCmd.AddCommand(getCmd)
 }
