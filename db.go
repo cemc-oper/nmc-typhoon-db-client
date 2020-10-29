@@ -63,7 +63,7 @@ func GetRecords(
 		forecastHourQuery,
 	)
 
-	log.Println(querySQL)
+	// log.Println(querySQL)
 
 	rows, err := db.Queryx(querySQL)
 
