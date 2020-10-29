@@ -11,8 +11,8 @@ type Record struct {
 	Engname   DataString   `csv:"engname"`
 	Datetime  NullDateTime `csv:"datetime"`
 	Fcsthour  int          `csv:"fcsthour"`
-	Lon       DataFloat64  `csv:"lon"`
 	Lat       DataFloat64  `csv:"lat"`
+	Lon       DataFloat64  `csv:"lon"`
 	Pressure  DataInt32    `csv:"pressure"`
 	Windv     DataFloat64  `csv:"windv"`
 	Gusts     DataFloat64  `csv:"gusts"`
