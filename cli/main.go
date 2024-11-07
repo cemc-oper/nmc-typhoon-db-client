@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/nwpc-oper/nmc-typhoon-db-client/cli/cmd"
+	"github.com/cemc-oper/nmc-typhoon-db-client/cli/cmd"
 )
 
 func main() {

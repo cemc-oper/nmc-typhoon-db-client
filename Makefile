@@ -8,8 +8,8 @@ export BIN_PATH := $(shell pwd)/bin
 
 cmd:
 	go build \
-		-ldflags "-X \"github.com/nwpc-oper/nmc-typhoon-db-client/cli/cmd.Version=${VERSION}\" \
-        -X \"github.com/nwpc-oper/nmc-typhoon-db-client/cli/cmd.BuildTime=${BUILD_TIME}\" \
-        -X \"github.com/nwpc-oper/nmc-typhoon-db-client/cli/cmd.GitCommit=${GIT_COMMIT}\" " \
+		-ldflags "-X \"github.com/cemc-oper/nmc-typhoon-db-client/cli/cmd.Version=${VERSION}\" \
+        -X \"github.com/cemc-oper/nmc-typhoon-db-client/cli/cmd.BuildTime=${BUILD_TIME}\" \
+        -X \"github.com/cemc-oper/nmc-typhoon-db-client/cli/cmd.GitCommit=${GIT_COMMIT}\" " \
 		-o ${BIN_PATH}/nmc_typhoon_db_client \
 		cli/main.go

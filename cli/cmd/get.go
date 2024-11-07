@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	nmc_typhoon_db_client "github.com/nwpc-oper/nmc-typhoon-db-client"
+	nmc_typhoon_db_client "github.com/cemc-oper/nmc-typhoon-db-client"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )

@@ -1,4 +1,4 @@
-module github.com/nwpc-oper/nmc-typhoon-db-client
+module github.com/cemc-oper/nmc-typhoon-db-client
 
 go 1.15
 
